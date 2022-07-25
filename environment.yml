@@ -1,0 +1,25 @@
+# copyright: 2022 EUMETSAT
+# license: LICENSE.txt
+name: cmts_learn_olci
+channels:
+  - conda-forge
+  - cmts
+  - eumetsat
+dependencies:
+  - conda-forge::python=3.9
+  - conda-forge::notebook=6.4.11
+  - conda-forge::xarray
+  - conda-forge::netcdf4
+  - conda-forge::shapely
+  - conda-forge::matplotlib
+  - conda-forge::cartopy
+  - conda-forge::jupyter_contrib_nbextensions
+  - conda-forge::ipywidgets
+  - conda-forge::scikit-image
+  - conda-forge::plotly
+  - conda-forge::bokeh
+  - conda-forge::ipykernel
+  - conda-forge::cmocean
+  - cmts::hda
+  - cmts::eumartools
+  - eumetsat::eumdac
