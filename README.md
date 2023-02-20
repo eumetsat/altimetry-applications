@@ -1,9 +1,10 @@
-# Learn OLCI
+# Altimetry
 
-The **learn-olci** module consists of a collection of python-based Jupyter-notebooks 
-design to demonstrate the capability of the Ocean and Land Colour Instrument (OLCI), 
-carried by the Sentinel-3 satellites, and to help users begin to work with its data 
-at level-1B and level-2. 
+The **Altimetry** module consists of a collection of python-based Jupyter-notebooks 
+design to demonstrate the capability of the altimeter instruments (SRAL and Poseidon-4), 
+carried by the Sentinel-3 and Sentinel-6 satellites, and to help users begin to work with its data 
+at level-1B and level-2.
+
 
 For any questions about this repository, please contact ops@eumetsat.int.
 
