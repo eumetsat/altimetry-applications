@@ -1,10 +1,16 @@
-# Altimetry
+# Altimetry applications
 
-The **Altimetry** module consists of a collection of python-based Jupyter-notebooks 
-design to demonstrate the capability of the altimeter instruments (SRAL and Poseidon-4), 
-carried by the Sentinel-3 and Sentinel-6 satellites, and to help users begin to work with its data 
-at level-1B and level-2.
+<hr>
 
+[![Python](https://img.shields.io/badge/python-anaconda-blue)](https://www.anaconda.com/products/distribution)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
+
+The **altimetry-applications** module consists of a collection of python-based Jupyter-notebooks 
+that demonstrate some common methodologies employed in the field of altimetry. The focus is predominantly
+on altimetry products made available by EUMETSAT through the Copernicus programme (e.g. those from Sentinel-3 SRAL, Sentinel-6 POSEIDON-4 and Jason-3) 
+but also includes information on general principles of altimetry. It features examples of typical workflows and approaches relevant to multi-sensor analysis, amongst others.
+
+Users looking for more information on using products from the Sentinel-3 Synthetic Aperture Radar Altimeter (SRAL) and Sentinel-6 POSEIDON-4 altimeter in the marine domain are encouraged to check out our [learn-sral](https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/sensors/learn-sral) and [learn-s6](https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/sensors/learn-s6) repositories.
 
 For any questions about this repository, please contact ops@eumetsat.int.
 
@@ -12,7 +18,7 @@ For any questions about this repository, please contact ops@eumetsat.int.
  
 This code is licensed under an MIT license. See file LICENSE.txt for details on 
 the usage and distribution terms. No dependencies are distributed as part of this 
-package. Copyright EUMETSAT 2022.
+package. Copyright EUMETSAT 2023.
 
 All product names, logos, and brands are property of their respective owners. 
 All company, product and service names used in this website are for identification 
@@ -22,6 +28,7 @@ purposes only.
 
 * [**Ben Loveday**](mailto://ops@eumetsat.int) - [EUMETSAT](http://www.eumetsat.int)
 * [**Hayley Evers-King**](mailto://ops@eumetsat.int) - [EUMETSAT](http://www.eumetsat.int)
+* [**Vinca Rosmorduc**](mailto://ops@eumetsat.int) - [EUMETSAT](http://www.eumetsat.int)
 
 Please see the AUTHORS.txt file for more information on contributors.
 
@@ -35,23 +42,7 @@ operating system. Anaconda Python distributions include Jupyter Notebook.
 
 |item|version|licence|package info|
 |---|---|---|---|
-|python|3.8.13|PSF|https://docs.python.org/3/license.html|
-|xarray|0.21.1|Apache-2.0|https://anaconda.org/conda-forge/xarray|
-|netcdf4|1.5.8|MIT|https://anaconda.org/conda-forge/netcdf4|
-|shapely|1.8.0|BSD-3|https://anaconda.org/conda-forge/shapely|
-|matplotlib|3.5.1|PSFL|https://matplotlib.org/stable/users/project/license.html|
-|cartopy|0.20.2|LGPL-3|https://scitools.org.uk/cartopy/docs/latest/copyright.html|
-|notebook|6.4.8|BSD-3|https://anaconda.org/conda-forge/notebook|
-|jupyter_contrib_nbextensions|0.5.1|BSD-3|https://anaconda.org/conda-forge/jupyter_contrib_nbextensions|
-|ipywidgets|7.6.5|BSD-3|https://anaconda.org/conda-forge/ipywidgets|
-|scikit-image|0.19.1|BSD-3|https://anaconda.org/conda-forge/scikit-image|
-|plotly|5.6.0|MIT|https://anaconda.org/conda-forge/plotly|
-|bokeh|2.4.2|BSD-3|https://anaconda.org/conda-forge/bokeh|
-|hda|0.2.2|Apache-2.0|https://pypi.org/project/hda/|
-|eumartools|0.0.1|MIT|https://anaconda.org/cmts/eumartools|
-|ipykernel|6.4.1|BSD-3|https://anaconda.org/conda-forge/ipykernel|
-|cmocean|2.0|MIT|https://anaconda.org/conda-forge/cmocean|
-|eumdac|1.0.0|MIT|https://anaconda.org/eumetsat/eumdac|
+....
 
 ## Installation
 
@@ -66,7 +57,7 @@ the Anaconda Navigator). Once you have opened a terminal/prompt, you should navi
 to the directory where you want to put the code. Once you are in the correct directory, 
 you should run the following command;
 
-`git clone --recurse-submodules --remote-submodules https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/sensors/learn-olci.git`
+`git clone --recurse-submodules --remote-submodules https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/applications/altimetry-applications.git`
 
 This will make a local copy of all the relevant files.
 
@@ -77,7 +68,7 @@ This will make a local copy of all the relevant files.
 
 ## Usage
 
-This collection supports Python 3.8. Although many options are possible, the 
+This collection supports Python 3.9. Although many options are possible, the 
 authors highly recommend that users install the appropriate Anaconda package 
 for their operating system. In order to ensure that you have all the required 
 dependencies, we recommend that you build a suitable Python environment, as 
@@ -101,10 +92,10 @@ To create the environment, run:
 
 `conda env create -f environment.yml`
 
-This will create a Python 3.8 environment called **cmts_learn_olci**. The environment 
+This will create a Python environment called **cmts_learn_olci**. The environment 
 won't be activated by default. To activate it, run:
 
-`conda activate cmts_learn_olci`
+`conda activate cmts_altimetry_applications`
 
 Now you are ready to go!
 
@@ -119,19 +110,11 @@ before, please look at the [Introduction to Python and Project Jupyter](./workin
 To to run Jupyter Notebook, open a terminal or Anaconda prompt and make sure you have activated 
 the correct environment. Again, navigate to the repository folder.
 
-If you are running this code for the first time in this environment, you need to enable two
-`extensions` to Jupyter by running the following commands.
-
-`jupyter nbextension enable --py widgetsnbextension` \
-`jupyter nbextension enable exercise2/main`
-
-*Note: you can also enable these in the **Nbextensions** tab of the Jupyter browser window* 
-
 Now you can run Jupyter using:
 
-`jupyter notebook` or `jupyter-notebook`, depending on your operating system.
+`jupyter lab`
 
-This should open Jupyter Notebooks in a browser window. On occasion, Jupyter may not
+This should open Jupyter Lab in a browser window. On occasion, Jupyter may not
 be able to open a window and will give you a URL to past in your browser. Please do
 so, if required.
 
@@ -155,22 +138,17 @@ at ops@eumetsat.int. We welcome your feedback!
 
 **Installation:**
 
-`git clone --recurse-submodules --remote-submodules https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/sensors/learn-olci.git`
+`git clone --recurse-submodules --remote-submodules https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/applications/altimetry-applications.git`
 
 **Create and set environment**
 
 `conda env create -f environment.yml` \
-`conda activate cmts_learn_olci`
+`conda activate cmts_altimetry_applications`
 
 **WEkEO SPECIFIC**
 
-`ipython kernel install --user --name=cmts_learn_olci`
-
-**Activate extensions (1st run in environment, only)**
-
-`jupyter nbextension enable --py widgetsnbextension` \
-`jupyter nbextension enable exercise2/main`
+`ipython kernel install --user --name=cmts_altimetry_applications`
 
 **Run**
 
-`jupyter notebook` or `jupyter-notebook`
+`jupyter lab`
