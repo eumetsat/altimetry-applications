@@ -9,7 +9,8 @@ def read_reference_tracks(params):
 
     # read reference tracks
     track_names = params["tracks"]["reference_track_names"].split(',')
-    resolved_path=os.path.join(pathlib.Path(__file__).parent.resolve(), params["tracks"]["reference_track_dir"],'*standard*.nc')
+    resolved_path=os.path.join(pathlib.Path(__file__).parent.resolve(),
+                               params["tracks"]["reference_track_dir"], 'ref??_standard_measurement.nc')
     sample_files = glob.glob(resolved_path)
     reference_tracks = {}
     for sample_file, track_name in zip(sorted(sample_files), track_names):
@@ -20,7 +21,8 @@ def read_reference_tracks(params):
 def read_user_tracks(params):
 
     # read user tracks
-    resolved_path=os.path.join(pathlib.Path(__file__).parent.resolve(), params["tracks"]["user_track_dir"],'*standard*.nc')
+    resolved_path=os.path.join(pathlib.Path(__file__).parent.resolve(),
+                               params["tracks"]["user_track_dir"],'user??_standard_measurement.nc')
     sample_files = glob.glob(resolved_path)
     user_tracks = {}
     count = 0

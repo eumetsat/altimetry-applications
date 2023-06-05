@@ -33,8 +33,7 @@ wheels/
 *DS_Store*
 
 # Repo specific
-1_OLCI_introductory/products/
-1_OLCI_introductory/*.png
-2_OLCI_advanced/products/
-2_OLCI_advanced/*.png
-2_OLCI_advanced/outputs
+!ref01_standard_measurement.nc
+!ref02_standard_measurement.nc
+!ref03_standard_measurement.nc
+!user01_standard_measurement.nc
