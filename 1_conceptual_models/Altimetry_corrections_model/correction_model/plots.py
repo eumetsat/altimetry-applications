@@ -91,7 +91,7 @@ def replot_corrections(self, make_trace):
         # update legend
         self.ax_corr.plot_legend.remove()
         self.ax_corr.plot_legend = self.ax_corr.legend([self.ax_corr.line1a, self.ax_corr.line1b],
-                                         [self.varname, self.varname + " (corrected)"],
+                                         [self.varname, self.varname.replace("raw", "corrected")],
                                          fontsize=10, ncol=1)
         
         self.ax_corr.plot_legend.get_frame().set_linewidth(0.0)

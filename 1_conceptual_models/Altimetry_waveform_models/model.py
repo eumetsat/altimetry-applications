@@ -54,16 +54,8 @@ app.layout = html.Div([
     html.Div([
         dcc.Graph(id='x-time-series'),
         dcc.Graph(id='y-time-series'),
-    ], style={'display': 'inline-block', 'width': '49%'}),
+    ], style={'display': 'inline-block', 'width': '49%'})
 
-    html.Div(dcc.Slider(
-        df['Gate'].min(),
-        df['Gate'].max(),
-        step=None,
-        id='crossfilter-gate--slider',
-        value=df['Gate'].max(),
-        marks={str(gate): str(gate) for gate in df['Gate'].unique()}
-    ), style={'width': '49%', 'padding': '0px 20px 20px 20px'})
 ])
 
 
@@ -72,8 +64,7 @@ app.layout = html.Div([
     Input('crossfilter-xaxis-column', 'value'),
     Input('crossfilter-yaxis-column', 'value'),
     Input('crossfilter-xaxis-type', 'value'),
-    Input('crossfilter-yaxis-type', 'value'),
-    Input('crossfilter-gate--slider', 'value'))
+    Input('crossfilter-yaxis-type', 'value'))
 def update_graph(xaxis_column_name, yaxis_column_name,
                  xaxis_type, yaxis_type,
                  gate_value):
