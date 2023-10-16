@@ -6,6 +6,7 @@ def calculate_variables(self):
     # reads in the necessary variables from the data and calculates some fundamental values
     
     self.vars = {}
+    
     # direct variables: Sentinel-3 1 Hz (could add selectables for 20 Hz (but don't really see the point)
     S3_SRAL = True
     
@@ -38,13 +39,15 @@ def calculate_variables(self):
             self.vars[key] = self.all_tracks[self.track_number][variables[key]].data
         else:
             self.vars[key] = self.all_tracks[self.track_number][variables[key]]
-    
+
+    '''
     for key in variables:
         # apply flag generically, removing everything that is not ocean
         # WIP: could add a tick box to make this selectable
         if not "lon" in key and not "lat" in key and not "surf_type" in key and not "surf_class" in key:
             self.vars[key][self.vars["surf_class"] != 0] = np.nan 
-        
+    '''
+    
     # calculated variables
     self.vars["mss_raw"] = self.vars["geoid"] + self.vars["mdt"]
     self.vars["ssh_raw"] = self.vars["alt"] - self.vars["range"]

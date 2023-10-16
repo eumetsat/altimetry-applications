@@ -53,43 +53,42 @@ class CorrectionModel(widgets.VBox):
         set_spatial_plot(self)
         
         # define widgets
-        selection_radio_widget, correction_check_box_widgets, corrections, \
-            reference_surface_radio_widget, self.range_slider = build_widgets(self)
-
-        # set control panel for corrections
-        self.controls_corr = widgets.VBox([
-            correction_check_box_widgets["corr_00"],
-            correction_check_box_widgets["corr_01"],
-            correction_check_box_widgets["corr_02"],
-            correction_check_box_widgets["corr_03"],
-            correction_check_box_widgets["corr_04"],
-            correction_check_box_widgets["corr_05"],
-            correction_check_box_widgets["corr_06"],
-            correction_check_box_widgets["corr_07"],
-            correction_check_box_widgets["corr_08"],
-            correction_check_box_widgets["corr_09"],
-            correction_check_box_widgets["corr_10"],
-            correction_check_box_widgets["corr_11"],
-            correction_check_box_widgets["corr_12"]
-        ])
+        selection_radio_widget, self.correction_check_box_widgets, self.corrections,\
+          self.flag_check_box_widgets, self.flags, reference_surface_radio_widget,\
+          self.range_slider, clear_corr_button, clear_flag_button = build_widgets(self)
 
         # set layouts for plots and control panels
-        width_left = "275px"
-        width_right = "770px"
+        col1w = "300px"
+        row1h = "185px"
+        col2w = "350px"
+        row2h = "550px"
+        col3w = "100px"
         
+        # set control panel for corrections
+        self.controls_corr = widgets.VBox([
+            self.correction_check_box_widgets[f"corr_{str(ii).zfill(2)}"] for ii in range(len(self.corrections))])
+        self.controls_corr.layout = make_box_layout(width="270px", height="450px", border=None)
+
+        # set control panel for flags
+        self.controls_flags = widgets.HBox([
+            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"] for ii in range(len(self.flags))])
+
         # top row components
-        self.output_spatial_plot.layout = make_box_layout(width=width_left, height="150px", border=None)
-        selection_radio_widget.layout = make_box_layout(width=width_right)
-        self.range_slider.layout = make_box_layout(width=width_right)
-        self.selectors = widgets.VBox([selection_radio_widget, self.range_slider])
-        self.first_row = widgets.HBox([self.output_spatial_plot, self.selectors]) 
+        self.output_spatial_plot.layout = make_box_layout(width=col1w, height=row1h, border=None)
+        selection_radio_widget.layout = make_box_layout(width=col2w, height="140px")
+        reference_surface_radio_widget.layout = make_box_layout(width=col2w, height="140px")
+        self.inset_box1 = widgets.HBox([selection_radio_widget, reference_surface_radio_widget])
+        self.controls_flags_full = widgets.HBox([widgets.HTML(description="𝗙𝗹𝗮𝗴𝘀:       ", value="",), self.controls_flags])
+        self.controls_flags_full.layout = make_box_layout(width="710px", height="45px")
+        self.inset_box2 = widgets.VBox([self.inset_box1, self.controls_flags_full])
+        self.first_row = widgets.HBox([self.output_spatial_plot, self.inset_box2])
 
         # second row components
-        reference_surface_radio_widget.layout = make_box_layout(width=width_left)
-        self.controls_corr.layout = make_box_layout(width=width_left)        
-        self.controls = widgets.VBox([reference_surface_radio_widget, self.controls_corr])
-        self.output_corr_plot.layout = make_box_layout()
-        self.second_row = widgets.HBox([self.controls, self.output_corr_plot]) 
+        self.controls_corr_full = widgets.VBox([widgets.HTML(description="𝗖𝗼𝗿𝗿𝗲𝗰𝘁𝗶𝗼𝗻𝘀:", value="",),self.controls_corr, clear_corr_button])
+        self.controls_corr_full.layout = make_box_layout(width=col1w, height=row2h)        
+        self.range_slider.layout = make_box_layout(width=col3w)
+        self.output_corr_plot.layout = make_box_layout(width="600px")
+        self.second_row = widgets.HBox([self.controls_corr_full, self.output_corr_plot, self.range_slider]) 
 
         # add to children
         self.children = [self.first_row, self.second_row]
@@ -105,19 +104,11 @@ class CorrectionModel(widgets.VBox):
         self.range_slider.observe(self.update_model, 'value')
         
         # changes to corrections
-        correction_check_box_widgets["corr_00"].observe(self.change_correction, 'value')  #special - implement all except 4/5
-        correction_check_box_widgets["corr_01"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_02"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_03"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_04"].observe(self.change_correction, 'value')  #special - implement all tides
-        correction_check_box_widgets["corr_05"].observe(self.change_correction, 'value')  #special - implement all ocean tides
-        correction_check_box_widgets["corr_06"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_07"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_08"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_09"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_10"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_11"].observe(self.change_correction, 'value')
-        correction_check_box_widgets["corr_12"].observe(self.change_correction, 'value')
+        for ii in range(len(self.corrections)): 
+            self.correction_check_box_widgets[f"corr_{str(ii).zfill(2)}"].observe(self.change_correction, 'value')
+        
+        # clear corrections
+        clear_corr_button.on_click(self.on_button_clicked)
         
         # show track min/max
         
@@ -125,8 +116,8 @@ class CorrectionModel(widgets.VBox):
     def update_model(self, change):
         """refine plot extents"""
         
-        low_lat_val = self.children[0].children[1].children[1].value[0]
-        high_lat_val = self.children[0].children[1].children[1].value[1]
+        low_lat_val = self.children[1].children[2].value[0]
+        high_lat_val = self.children[1].children[2].value[1]
 
         # change spatial map
         ii = np.where((self.vars["lat"] >= low_lat_val) & (self.vars["lat"] <= high_lat_val))[0]
@@ -135,10 +126,10 @@ class CorrectionModel(widgets.VBox):
 
         if (low_lat_val == -90.0) and (high_lat_val == 90.0):
             self.ax_spatial.set_global()
-            self.ax_spatial.set_aspect(2)
+            self.ax_spatial.set_aspect(1.5)
         else:
             self.ax_spatial.set_extent([low_lon_val, high_lon_val, low_lat_val, high_lat_val])
-            self.ax_spatial.set_aspect(np.abs(high_lon_val - low_lon_val) / (high_lat_val - low_lat_val))
+            self.ax_spatial.set_aspect(np.abs(high_lon_val - low_lon_val) / (high_lat_val - low_lat_val)/2*1.5)
 
         # change correction map
         self.ax_corr.set_ylim([low_lat_val, high_lat_val])
@@ -146,7 +137,7 @@ class CorrectionModel(widgets.VBox):
     # track selection radio button control
     def change_track(self, change):
         
-        self.track_number = self.children[0].children[1].children[0].value
+        self.track_number = self.children[0].children[1].children[0].children[0].value
 
         if change.new:
             # update data
@@ -182,7 +173,7 @@ class CorrectionModel(widgets.VBox):
     # reference surface selection radio button control
     def change_reference_surface(self, change):
         
-        self.reference_surface = self.children[1].children[0].children[0].value
+        self.reference_surface = self.children[0].children[1].children[0].children[1].value
         
         if change.new:
             select_reference_surface(self)
@@ -207,3 +198,10 @@ class CorrectionModel(widgets.VBox):
 
         make_trace = recalculate_corrections(self)
         replot_corrections(self, make_trace)
+    
+    def on_button_clicked(self, b):
+        self.clear_corrections()
+    
+    def clear_corrections(self):
+        for ii in range(len(self.corrections)): 
+            self.correction_check_box_widgets[f"corr_{str(ii).zfill(2)}"].value = False        

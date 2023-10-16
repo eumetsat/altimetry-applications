@@ -8,7 +8,7 @@ from correction_model.calculations import *
 def set_corr_plot(self):
 
     with self.output_corr_plot:
-        self.fig1, self.ax_corr = plt.subplots(constrained_layout=True, figsize=(7.5, 5))
+        self.fig1, self.ax_corr = plt.subplots(constrained_layout=True, figsize=(5, 5))
         
         # data reading
         calculate_variables(self)
@@ -37,7 +37,7 @@ def set_spatial_plot(self):
     with self.output_spatial_plot:
         self.fig2, self.ax_spatial = plt.subplots(constrained_layout=True, figsize=(2.5, 1.75),
           subplot_kw=dict(projection=cartopy.crs.PlateCarree()))
-        self.ax_spatial.add_feature(cartopy.feature.LAND, zorder=4, edgecolor='k', facecolor='#5D6D7E')
+        self.ax_spatial.add_feature(cartopy.feature.LAND, zorder=4, edgecolor='k', facecolor='#5D6D7E', linewidth=0.5)
         self.gl = self.ax_spatial.gridlines(draw_labels = True, zorder=20, color='0.0',
                                             linestyle='--', linewidth=0.5)
         self.gl.top_labels = False
@@ -50,11 +50,11 @@ def set_spatial_plot(self):
         self.ax_spatial.line2a = self.ax_spatial.scatter(self.vars["lon"], self.vars["lat"],
                                               c=self.vars["data_raw"],
                                               cmap=plt.cm.RdYlBu_r,
-                                              s=20, marker='o', edgecolors=None,
+                                              s=10, marker='o', edgecolors=None,
                                               linewidth=0.0, zorder=3)
 
         self.ax_spatial.set_global()
-        self.ax_spatial.set_aspect(2)
+        self.ax_spatial.set_aspect(1.5)
 
         plt.show()
 
