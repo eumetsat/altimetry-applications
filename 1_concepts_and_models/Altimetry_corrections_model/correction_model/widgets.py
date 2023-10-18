@@ -50,15 +50,32 @@ def build_widgets(self, width="250px"):
     # define flag widgets: check boxes
     flag_check_box_widgets = {}
     
-    flags = ["Surface class",
-             "Surface type"]
+    flags = ["Surface class (open ocean)",
+             "Surface class (land)",
+             "Surface class (continental water)",
+             "Surface class (aquatic vegetation)",
+             "Surface class (continental ice/snow)",
+             "Surface class (floating ice)",
+             "Surface class (salted basin)",
+             "Surface type (ocean_or_semi_enclosed_sea)",
+             "Surface type (enclosed_sea_or_lake)",
+             "Surface type (continental_ice)",
+             "Surface type (land)"]
+    
+    flag_values = [0,1,2,3,4,5,6,0,1,2,3]
     
     count = 0
     for flag in flags:
+        if "ocean" in flag:
+            set_val = False
+            set_disabled = True
+        else:
+            set_val = True
+            set_disabled = False
         flag_check_box_widgets[f"flag_{str(count).zfill(2)}"] = widgets.Checkbox(
-        value=False,
+        value=set_val,
         description=flag,
-        disabled=False,
+        disabled=set_disabled,
         indent=False,
         layout=Layout(width=width))
         count = count + 1
@@ -88,4 +105,4 @@ def build_widgets(self, width="250px"):
                                             description='Latitude:')
     
     return selection_radio_widget, correction_check_box_widgets, corrections, flag_check_box_widgets, flags, \
-           reference_surface_radio_widget, range_slider, clear_corr_button, clear_flag_button
+           flag_values, reference_surface_radio_widget, range_slider, clear_corr_button, clear_flag_button

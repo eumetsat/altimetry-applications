@@ -3,9 +3,9 @@
 import numpy as np
 
 def calculate_variables(self):
-    # reads in the necessary variables from the data and calculates some fundamental values
     
-    self.vars = {}
+    # reads in the necessary variables from the data and calculates some fundamental values
+    self.vars_raw = {}
     
     # direct variables: Sentinel-3 1 Hz (could add selectables for 20 Hz (but don't really see the point)
     S3_SRAL = True
@@ -33,26 +33,33 @@ def calculate_variables(self):
     else:
         # WIP: need to factor in the damn annoying change to netCDF group structure!
         print("Sentinel-6 not yet implemented")
-    
+
+    self.variables = variables
+   
+    # read in the specified variables
     for key in variables:
         if "lon" in key or "lat" in key:
-            self.vars[key] = self.all_tracks[self.track_number][variables[key]].data
+            self.vars_raw[key] = self.all_tracks[self.track_number][variables[key]].data
         else:
-            self.vars[key] = self.all_tracks[self.track_number][variables[key]]
+            self.vars_raw[key] = self.all_tracks[self.track_number][variables[key]]
 
-    '''
+    # apply the default flags (but retain original variables
+    self.vars = self.vars_raw.copy()
     for key in variables:
-        # apply flag generically, removing everything that is not ocean
-        # WIP: could add a tick box to make this selectable
+        # Apply flag generically, removing everything that is not ocean for the default
+        # state
         if not "lon" in key and not "lat" in key and not "surf_type" in key and not "surf_class" in key:
             self.vars[key][self.vars["surf_class"] != 0] = np.nan 
-    '''
+    self.vars = calculate_derived_vars(self.vars)
     
+def calculate_derived_vars(derived_vars):
     # calculated variables
-    self.vars["mss_raw"] = self.vars["geoid"] + self.vars["mdt"]
-    self.vars["ssh_raw"] = self.vars["alt"] - self.vars["range"]
-    self.vars["ssha_raw"] = self.vars["ssh_raw"] - self.vars["mss_raw"]
-    self.vars["adt_raw"] = self.vars["ssha_raw"] + self.vars["mdt"]
+    derived_vars["mss_raw"] = derived_vars["geoid"] + derived_vars["mdt"]
+    derived_vars["ssh_raw"] = derived_vars["alt"] - derived_vars["range"]
+    derived_vars["ssha_raw"] = derived_vars["ssh_raw"] - derived_vars["mss_raw"]
+    derived_vars["adt_raw"] = derived_vars["ssha_raw"] + derived_vars["mdt"]
+        
+    return derived_vars
 
 def box_switch(self, box_range, disabled_state=True):
     for ii in box_range:
@@ -62,20 +69,61 @@ def select_reference_surface(self):
     # selects the reference surface
     
     if self.reference_surfaces[0] in self.reference_surface: 
-        self.vars["data_raw"] = self.vars["ssh_raw"]
+        self.vars["data_ref"] = self.vars["ssh_raw"]
         self.varname = "SSH [m] (raw)"
         
     elif self.reference_surfaces[1] in self.reference_surface:
-        self.vars["data_raw"] = self.vars["ssha_raw"]
+        self.vars["data_ref"] = self.vars["ssha_raw"]
         self.varname = "SSHA [m] (raw)"
     
     elif self.reference_surfaces[2] in self.reference_surface:
-        self.vars["data_raw"] = self.vars["adt_raw"]
+        self.vars["data_ref"] = self.vars["adt_raw"]
         self.varname = "ADT [m] (raw)"
 
-def recalculate_corrections(self):
-    # (re-)calculates the corrections
-    
+def recalculate_corrections_flags(self):
+    # (re-)calculates the corrections and flags
+
+    self.vars = self.vars_raw.copy()
+    self.vars = calculate_derived_vars(self.vars)
+    select_reference_surface(self)
+
+    '''
+    class_flags_values = self.flag_values[0:7]
+    class_flags = []
+    class_flags.append(self.children[2].children[0].children[1].children[0].value)
+    class_flags.append(self.children[2].children[0].children[1].children[1].value)
+    class_flags.append(self.children[2].children[1].children[0].children[0].value)    
+    class_flags.append(self.children[2].children[1].children[0].children[1].value)
+    class_flags.append(self.children[2].children[1].children[0].children[2].value)
+    class_flags.append(self.children[2].children[2].children[0].children[0].value)
+    class_flags.append(self.children[2].children[2].children[0].children[1].value)
+
+    type_flags_values = self.flag_values[7:]
+    type_flags = []
+    type_flags.append(self.children[2].children[3].children[0].children[2].value)
+    type_flags.append(self.children[2].children[3].children[0].children[0].value)
+    type_flags.append(self.children[2].children[3].children[0].children[1].value)
+    type_flags.append(self.children[2].children[3].children[0].children[2].value)
+
+    # apply flags to data before recalculation
+    for key in self.variables:
+        if not "lon" in key and not "lat" in key and not "surf_type" in key and not "surf_class" in key:
+            for ii in range(len(class_flags)):
+                if class_flags[ii] == True:
+                    self.vars[key][self.vars["surf_class"] == class_flags_values[ii]] = np.nan
+
+    for ii in range(len(type_flags)):
+                if type_flags[ii] == True:
+                    print(f"True: {type_flags[ii]}")
+                    self.vars[key][self.vars["surf_type"] == type_flags_values[ii]] = np.nan                
+                else:
+                    print(f"False: {type_flags[ii]}")
+
+    for ii in range(len(class_flags)):
+        if class_flags[ii] == True:
+            self.vars["data_ref"][self.vars["surf_class"] == class_flags_values[ii]] = np.nan
+    '''
+
     # count the logic
     tick_logic = []
     for ii in range(0, len(self.children[1].children[0].children[1].children)):
@@ -85,7 +133,7 @@ def recalculate_corrections(self):
         self.vars["data_corr"] = None
         make_trace = False
     else:
-        self.vars["data_corr"] = self.vars["data_raw"]
+        self.vars["data_corr"] = self.vars["data_ref"]
         make_trace = True
 
     # work through the logic for the check-boxes
