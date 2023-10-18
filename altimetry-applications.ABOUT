@@ -3,82 +3,41 @@ name: altimetry-applications
 description: Compendium of training content associated with conceptual models and methodological approaches to working with Earth observation altimetry data.
 copyright: 2023 EUMETSAT
 license_spdx: MIT
-date: 01-05-2023
-home_url: https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/applications/ocean-colour-applications
+date: 01-11-2023
+home_url: https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/applications/altimetry-applications
 
 # Package IPR documentation
 license_text_file: LICENSE.txt
  
 # File(s) associated to this component
 
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/background/Ruddick/HYPERTEACH-pymodel_v1.0_IOCCGjul2022_draft2_NOanswers.pdf
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/background/Ruddick/HYPERTEACH-pymodel_v1.0_IOCCGjul2022_draft2_NOanswers.docx
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/background/Bernard/Size_algorithm_demo.xls
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/cie-cmf.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/Rrs_samples
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/Rrs_samples/Rrs_user_01.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/Rrs_samples/Rrs_sample_01.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/Rrs_samples/Rrs_sample_02.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/Rrs_samples/Rrs_sample_03.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/Rrs_samples/Rrs_user_L8_01.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/Rrs_samples/Rrs_sample_04.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/Rrs_samples/Rrs_user_S2_01.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/params.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/colours.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/IOPs.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/IOP_model.ini
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/__init__.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/__version__.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/widgets.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/plots.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/components.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/main.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/forward_model/samples.py
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/README.md
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/Run_model.ipynb
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/LICENSE.txt
-about_resource: ./1_conceptual_models/Ocean_colour_forward_model/AUTHORS.txt
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/3_WQ_predict_image.ipynb
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/README.ipynb
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/data_load_S3.py
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/models.py
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/c2_processing.py
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/ml_regression.py
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/__init__.py
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/Py4R_plots.py
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/models/RFR_S3bands_CHL.pkl
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/models/RLR_S3bands_CHL.pkl
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/data/C2_test.txt
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/ml/data/C2_train.txt
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/2_Statistics_analysis.ipynb
-about_resource: ./2_methodological_approaches/machine_learning/Machine_learning_regression_for_ocean_parameters_retrieval/1_Load_and_visualize_data.ipynb
-about_resource: ./2_methodological_approaches/machine_learning/Bayesian_classification_of_water_types/Using_ML_for_water_type_identification.ipynb
-about_resource: ./2_methodological_approaches/machine_learning/Combining_S2_S3_MDN/support_functions.py
-about_resource: ./2_methodological_approaches/machine_learning/Combining_S2_S3_MDN/Using_MDN_to_combine_S3_S3_chl_retrievals_in_coastal_waters.ipynb
-about_resource: ./2_methodological_approaches/machine_learning/Neural_network_complex_water_parameters_C2RCC/Using_ML_to_retrieve_water_quality_indicators_in_coastal_waters.ipynb
-about_resource: ./2_methodological_approaches/machine_learning/common_functions.py
-about_resource: ./2_methodological_approaches/dineof/README.ipynb
-about_resource: ./2_methodological_approaches/dineof/dineof.init
-about_resource: ./2_methodological_approaches/dineof/dineof
-about_resource: ./2_methodological_approaches/dineof/SST_MED_SST_L3S_NRT_OBSERVATIONS_010_012_a_example.nc
-about_resource: ./2_methodological_approaches/dineof/01_DINEOF_prepare_Py.ipynb
-about_resource: ./2_methodological_approaches/dineof/02_DINEOF_run_Py.ipynb
-about_resource: ./2_methodological_approaches/dineof/03_DINEOF_results_Py.ipynb
-about_resource: ./img/S3_spectral_1200.png
-about_resource: ./img/4Fa_partition.png
-about_resource: ./img/S2_spectral_1200.png
-about_resource: ./img/C2RCC_NN_1.png
-about_resource: ./img/S3_spatial_resolution.png
-about_resource: ./img/C2RCC_NN_2.png
-about_resource: ./img/copernicus_logo.png
-about_resource: ./img/S2_spatial_resolution.png
-about_resource: ./img/SNAP_GUI_C2RCC.png
-about_resource: AUTHORS.txt
-about_resource: Index.ipynb
-about_resource: LICENSE.txt
-about_resource: README.md
-about_resource: environment.yml
-about_resource: ./binder/environment.yml
-about_resource: ocean-colour-applications.ABOUT
+about_resource: ./environment.yml
+about_resource: ./LICENSE.txt
+about_resource: ./AUTHORS.txt
+about_resource: ./README.txt
+about_resource: ./Index.ipynb
+about_resource: ./altimetry-applications.ABOUT
+about_resource: ./img/thumbs/Index_thumb.png
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/Run_model.ipynb
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/__init__.py
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/calculations.py
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/main.py
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/model_params.ini
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/params.py
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/plots.py
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/reference_tracks/ref01_standard_measurement.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/reference_tracks/ref02_standard_measurement.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/reference_tracks/ref03_standard_measurement.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/samples.py
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/user_tracks/user01_standard_measurement.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections_model/correction_model/widgets.py
+about_resource: ./2_methodological_approaches/eddies in an energetic current/S6_03_across-track_geostrophic_velocities.ipynb
+about_resource: ./2_methodological_approaches/eddies in an energetic current/S6_02_plots-SSHA_area.ipynb
+about_resource: ./2_methodological_approaches/coastal-waveforms/S6_Waveforms-coasts.ipynb
+about_resource: ./2_methodological_approaches/coastal-waveforms/S6_Waveforms-coasts-FB.ipynb
+about_resource: ./2_methodological_approaches/storms & cyclones/products/S3B_SR_2_WAT____20230118T100419_20230118T105202_20230213T042915_2863_075_122______MAR_O_NT_005.SEN3/xfdumanifest.xml
+about_resource: ./2_methodological_approaches/storms & cyclones/products/S3B_SR_2_WAT____20230118T100419_20230118T105202_20230120T020120_2863_075_122______MAR_O_ST_005.SEN3/xfdumanifest.xml
+about_resource: ./2_methodological_approaches/storms & cyclones/03_winds-orography.ipynb
+about_resource: ./2_methodological_approaches/storms & cyclones/data/s1a-iw-owi-cm-20230118t055303-20230118t055508-000003-046834_gs.nc
 
 # Notes:

@@ -27,8 +27,8 @@ purposes only.
 ## Authors
 
 * [**Ben Loveday**](mailto://ops@eumetsat.int) - [EUMETSAT](http://www.eumetsat.int)
-* [**Hayley Evers-King**](mailto://ops@eumetsat.int) - [EUMETSAT](http://www.eumetsat.int)
 * [**Vinca Rosmorduc**](mailto://ops@eumetsat.int) - [EUMETSAT](http://www.eumetsat.int)
+* [**Hayley Evers-King**](mailto://ops@eumetsat.int) - [EUMETSAT](http://www.eumetsat.int)
 
 Please see the AUTHORS.txt file for more information on contributors.
 
@@ -42,7 +42,14 @@ operating system. Anaconda Python distributions include Jupyter Notebook.
 
 |item|version|licence|package info|
 |---|---|---|---|
-....
+|python|3.9.16|PSF|https://docs.python.org/3/license.html|
+|jupyterlab|3.6.3|BSD-3|https://anaconda.org/conda-forge/jupyterlab|
+|xarray|2023.7.0|Apache-2.0|https://anaconda.org/conda-forge/xarray|
+|netcdf4|1.6.4|MIT|https://anaconda.org/conda-forge/netcdf4|
+|matplotlib|3.7.2|PSFL|https://matplotlib.org/stable/users/project/license.html|
+|cartopy|0.21.1|LGPL-3|https://scitools.org.uk/cartopy/docs/latest/copyright.html|
+|ipywidgets|8.1.0|BSD-3|https://anaconda.org/conda-forge/ipywidgets|
+|ipympl|0.9.3|BSD-3|https://anaconda.org/conda-forge/ipympl|
 
 ## Installation
 

@@ -3,24 +3,12 @@
 name: cmts_altimetry_applications
 channels:
   - conda-forge
-  - cmts
-  - eumetsat
 dependencies:
   - conda-forge::python=3.9
   - conda-forge::jupyterlab=3.6.3
-  - conda-forge::jupyter_nbextensions_configurator
   - conda-forge::ipympl
   - conda-forge::ipywidgets
   - conda-forge::xarray
   - conda-forge::netcdf4
-  #- conda-forge::shapely
   - conda-forge::matplotlib
   - conda-forge::cartopy
-  #- conda-forge::scikit-image
-  #- conda-forge::plotly
-  #- conda-forge::bokeh
-  #- conda-forge::ipykernel
-  #- conda-forge::cmocean
-  #- cmts::hda=1.1
-  #- cmts::eumartools
-  #- eumetsat::eumdac=2.0.1
