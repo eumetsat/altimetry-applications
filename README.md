@@ -2,8 +2,11 @@
 
 <hr>
 
-[![Python](https://img.shields.io/badge/python-anaconda-blue)](https://www.anaconda.com/products/distribution)
+[![Python](https://img.shields.io/badge/python%203.10-anaconda-green)](https://www.anaconda.com/products/distribution)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/git/https%3A%2F%2Fgitlab.eumetsat.int%2Feumetlab%2Foceans%2Focean-training%2Fapplications%2Faltimetry-applications/HEAD?urlpath=%2Ftree%2FIndex.ipynb)
+
+<hr>
 
 The **altimetry-applications** module consists of a collection of python-based Jupyter-notebooks 
 that demonstrate some common methodologies employed in the field of altimetry. The focus is predominantly
@@ -18,7 +21,7 @@ For any questions about this repository, please contact ops@eumetsat.int.
  
 This code is licensed under an MIT license. See file LICENSE.txt for details on 
 the usage and distribution terms. No dependencies are distributed as part of this 
-package. Copyright EUMETSAT 2023.
+package. Copyright EUMETSAT 2024.
 
 All product names, logos, and brands are property of their respective owners. 
 All company, product and service names used in this website are for identification 
@@ -42,14 +45,21 @@ operating system. Anaconda Python distributions include Jupyter Notebook.
 
 |item|version|licence|package info|
 |---|---|---|---|
-|python|3.9.16|PSF|https://docs.python.org/3/license.html|
-|jupyterlab|3.6.3|BSD-3|https://anaconda.org/conda-forge/jupyterlab|
-|xarray|2023.7.0|Apache-2.0|https://anaconda.org/conda-forge/xarray|
-|netcdf4|1.6.4|MIT|https://anaconda.org/conda-forge/netcdf4|
-|matplotlib|3.7.2|PSFL|https://matplotlib.org/stable/users/project/license.html|
-|cartopy|0.21.1|LGPL-3|https://scitools.org.uk/cartopy/docs/latest/copyright.html|
-|ipywidgets|8.1.0|BSD-3|https://anaconda.org/conda-forge/ipywidgets|
-|ipympl|0.9.3|BSD-3|https://anaconda.org/conda-forge/ipympl|
+|bokeh|3.2.1|BSD-3|https://anaconda.org/conda-forge/bokeh|
+|cartopy|0.23.0|LGPL-3|https://scitools.org.uk/cartopy/docs/latest/copyright.html|
+|cmocean|4.0.3|MIT|https://anaconda.org/conda-forge/cmocean|
+|dask|2024.6.0|BSD-3|https://anaconda.org/conda-forge/dask|
+|distributed|2024.6.0|BSD-3|https://anaconda.org/conda-forge/distributed| 
+|hda|2.16|Apache-2.0|https://pypi.org/project/hda|
+|ipywidgets|8.1.3|BSD-3|https://anaconda.org/conda-forge/ipywidgets|
+|jupyterlab|4.2.2|BSD-3|https://anaconda.org/conda-forge/jupyterlab|
+|matplotlib|3.8.4|PSFL|https://matplotlib.org/stable/users/project/license.html|
+|netcdf4|1.7.1|MIT|https://anaconda.org/conda-forge/netcdf4|
+|python|3.10.14|PSF|https://docs.python.org/3/license.html|
+|scipy|1.13.0|BSD-3|https://anaconda.org/conda-forge/scipy|
+|xarray|2024.6.0|Apache-2.0|https://anaconda.org/conda-forge/xarray|
+|eumartools|0.0.1|MIT|https://anaconda.org/cmts/eumartools|
+|eumdac|2.2.2|MIT|https://anaconda.org/eumetsat/eumdac|
 
 ## Installation
 
@@ -71,11 +81,16 @@ This will make a local copy of all the relevant files.
 *Note: If you find that you are missing packages, you should check that you ran 
 `git clone` with both the `--recurse-submodules` and `--remote-submodules` options.*
 
-*Note: if you are using an older version of git, you may find that your submodules are empty. In this case, you need to remove the folder and re-run the line above with `--recursive` added to the end*
+*Note: if you are using an older version of git, you may find that your submodules are empty. 
+In this case, you need to remove the folder and re-run the line above with `--recursive` added to the end*
+
+*Note: in some rare Anaconda instances, Git is not installed by default. To correct 
+this, you can install Git using `conda install git` from the Anaconda prompt (Windows) 
+or in your terminal (OSx/Linux).*
 
 ## Usage
 
-This collection supports Python 3.9. Although many options are possible, the 
+This collection supports Python 3.10. Although many options are possible, the 
 authors highly recommend that users install the appropriate Anaconda package 
 for their operating system. In order to ensure that you have all the required 
 dependencies, we recommend that you build a suitable Python environment, as 
@@ -95,11 +110,17 @@ in the **Installation** section above. In this folder there is a file called
 **environment.yml**. This contains all the information we need to install the relevant 
 packages.
 
-To create the environment, run:
+The conda package manager can be very slow, so we will install a new "solver" that 
+speeds things up. To do this, from the Anaconda prompt (Windows) or in the terminal (OSx/Linux) 
+you can run:
 
-`conda env create -f environment.yml`
+`conda install -n base conda-libmamba-solver`
 
-This will create a Python environment called **cmts_learn_olci**. The environment 
+Once the line above is run, to create out Python environment, we run:
+
+`conda env create -f environment.yml --solver=libmamba`
+
+This will create a Python environment called **cmts_ocean_case_studies**. The environment 
 won't be activated by default. To activate it, run:
 
 `conda activate cmts_altimetry_applications`
@@ -109,19 +130,20 @@ Now you are ready to go!
 *Note: remember that you may need to reactivate the environment in every 
 new window instance*
 
+*Note: if you get a warning that "solver" is not a valid conda argument, you can 
+skip the libmamba install and run:* `conda env create -f environment.yml`
+
 ### Running Jupyter Notebook
 
 This module is based around a series of [Jupyter Notebooks](https://jupyter.org/). These support high-level interactive learning by allowing us to combine code, text description and data visualisations. If you have not worked with `Jupyter Notebooks` 
 before, please look at the [Introduction to Python and Project Jupyter](./working-with-python/Intro_to_Python_and_Jupyter.ipynb) module to get a short introduction to their usage and benefits.
 
-To to run Jupyter Notebook, open a terminal or Anaconda prompt and make sure you have activated 
-the correct environment. Again, navigate to the repository folder.
+To run Jupyter Notebook, open a terminal or Anaconda prompt and make sure you have activated 
+the correct environment. Again, navigate to the repository folder. Now you can run Jupyter using:
 
-Now you can run Jupyter using:
+`jupyter lab` or `jupyter-lab`, depending on your operating system.
 
-`jupyter lab`
-
-This should open Jupyter Lab in a browser window. On occasion, Jupyter may not
+This should open Jupyter Notebooks in a browser window. On occasion, Jupyter may not
 be able to open a window and will give you a URL to past in your browser. Please do
 so, if required.
 
@@ -134,28 +156,9 @@ Now you can run the notebooks! We recommend you start with the [Index](./Index.i
 ### Collaborating, contributing and issues
 
 If you would like to collaborate on a part of this code base or contribute to it 
-please contact us on copernicus.training@eumetsat.int. If you are have issues and 
+please contact us on training@eumetsat.int. If you are have issues and 
 need help, or you have found something that doesn't work, then please contact us 
 at ops@eumetsat.int. We welcome your feedback!
 
 <hr>
 <hr>
-
-### Overview for advanced users
-
-**Installation:**
-
-`git clone --recurse-submodules --remote-submodules https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/applications/altimetry-applications.git`
-
-**Create and set environment**
-
-`conda env create -f environment.yml` \
-`conda activate cmts_altimetry_applications`
-
-**WEkEO SPECIFIC**
-
-`ipython kernel install --user --name=cmts_altimetry_applications`
-
-**Run**
-
-`jupyter lab`

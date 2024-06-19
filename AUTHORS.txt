@@ -1,5 +1,5 @@
 # Copyright holder
-copyright: 2023 EUMETSAT
+copyright: 2024 EUMETSAT
 license: LICENSE.txt
 
 # List of development authors
@@ -8,9 +8,6 @@ Vinca Rosmorduc (CLS)
 Hayley Evers-King (EUMETSAT)
 
 # List of contributory authors
-Aida Alvera-Azcarate (GHER)
-Vittorio Brando (CNR)
-Ana Ruescas (Brockmann Consult)
 
 # Support
 For all queries on this software package, please contact ops@eumetsat.int
