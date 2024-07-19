@@ -46,7 +46,7 @@ operating system. Anaconda Python distributions include Jupyter Notebook.
 |item|version|licence|package info|
 |---|---|---|---|
 |bokeh|3.2.1|BSD-3|https://anaconda.org/conda-forge/bokeh|
-|cartopy|0.23.0|LGPL-3|https://scitools.org.uk/cartopy/docs/latest/copyright.html|
+|cartopy|0.23.0|BSD-3|https://scitools.org.uk/cartopy/docs/latest/copyright.html|
 |cmocean|4.0.3|MIT|https://anaconda.org/conda-forge/cmocean|
 |dask|2024.6.0|BSD-3|https://anaconda.org/conda-forge/dask|
 |distributed|2024.6.0|BSD-3|https://anaconda.org/conda-forge/distributed| 
@@ -55,7 +55,7 @@ operating system. Anaconda Python distributions include Jupyter Notebook.
 |jupyterlab|4.2.2|BSD-3|https://anaconda.org/conda-forge/jupyterlab|
 |matplotlib|3.8.4|PSFL|https://matplotlib.org/stable/users/project/license.html|
 |netcdf4|1.7.1|MIT|https://anaconda.org/conda-forge/netcdf4|
-|python|3.10.14|PSF|https://docs.python.org/3/license.html|
+|python|3.10|PSF|https://docs.python.org/3.10/license.html|
 |scipy|1.13.0|BSD-3|https://anaconda.org/conda-forge/scipy|
 |xarray|2024.6.0|Apache-2.0|https://anaconda.org/conda-forge/xarray|
 |eumartools|0.0.1|MIT|https://anaconda.org/cmts/eumartools|
