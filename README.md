@@ -9,7 +9,7 @@
 <hr>
 
 ## Overview
-This software was developed for EUMETSAT under contract [add contract reference], funded by the European Union under the Copernicus component of the EU Space Programme. 
+This software was developed for EUMETSAT under contract EUM/CO/21/4600002620, funded by the European Union under the Copernicus component of the EU Space Programme. 
 
 The **altimetry-applications** module consists of a collection of python-based Jupyter-notebooks 
 that demonstrate some common methodologies employed in the field of altimetry. The focus is predominantly
