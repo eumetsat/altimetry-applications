@@ -8,6 +8,9 @@
 
 <hr>
 
+## Overview
+This software was developed for EUMETSAT under contract EUM/CO/21/4600002620, funded by the European Union under the Copernicus component of the EU Space Programme. 
+
 The **altimetry-applications** module consists of a collection of python-based Jupyter-notebooks 
 that demonstrate some common methodologies employed in the field of altimetry. The focus is predominantly
 on altimetry products made available by EUMETSAT through the Copernicus programme (e.g. those from Sentinel-3 SRAL, Sentinel-6 POSEIDON-4 and Jason-3) 
@@ -17,11 +20,13 @@ Users looking for more information on using products from the Sentinel-3 Synthet
 
 For any questions about this repository, please contact ops@eumetsat.int.
 
+## Ownership
+This software and all associated intellectual property rights (IPRs) are owned by the European Union.
+
 ## License
- 
 This code is licensed under an MIT license. See file LICENSE.txt for details on 
 the usage and distribution terms. No dependencies are distributed as part of this 
-package. Copyright EUMETSAT 2024.
+package. Copyright 2024 European Union.
 
 All product names, logos, and brands are property of their respective owners. 
 All company, product and service names used in this website are for identification 
