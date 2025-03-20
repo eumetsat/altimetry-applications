@@ -33,7 +33,7 @@ wheels/
 *DS_Store*
 
 # Repo specific
-!ref01_standard_measurement.nc
-!ref02_standard_measurement.nc
-!ref03_standard_measurement.nc
-!user01_standard_measurement.nc
+!ref01_standard_measurement_S3.nc
+!ref02_standard_measurement_S3.nc
+!ref03_standard_measurement_S3.nc
+!ref04_standard_measurement_S6.nc

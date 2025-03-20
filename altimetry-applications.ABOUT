@@ -18,11 +18,12 @@ about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/m
 about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/model_params.ini
 about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/params.py
 about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/plots.py
-about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/reference_tracks/ref01_standard_measurement.nc
-about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/reference_tracks/ref02_standard_measurement.nc
-about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/reference_tracks/ref03_standard_measurement.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/reference_tracks/ref01_standard_measurement_S3.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/reference_tracks/ref02_standard_measurement_S3.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/reference_tracks/ref03_standard_measurement_S3.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/reference_tracks/ref03_standard_measurement_S6.nc
 about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/samples.py
-about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/user_tracks/user01_standard_measurement.nc
+about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/user_tracks/.gitkeep
 about_resource: ./1_concepts_and_models/Altimetry_corrections/correction_model/widgets.py
 about_resource: ./2_methodological_approaches/.gitkeep
 about_resource: ./.gitmodules
