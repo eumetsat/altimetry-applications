@@ -36,10 +36,10 @@ class CorrectionModel(widgets.VBox):
         users_tracks = read_user_tracks(self.conditions["params"])
         self.all_tracks = reference_tracks | users_tracks
         self.conditions["track_names"] = list(self.all_tracks.keys())
-
+        
         # set default track
-        self.track_number = self.conditions["track_names"][0]
-
+        self.track_name = self.conditions["track_names"][0]
+        
         # set default reference surface
         self.reference_surfaces = ["Reference ellipsoid", "Mean Sea Surface (geoid+MDT)", "Geoid"]
         self.reference_surface = self.reference_surfaces[0]
@@ -71,17 +71,14 @@ class CorrectionModel(widgets.VBox):
 
         # set control panel for flags
         self.controls_flags1 = widgets.VBox([
-            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"] for ii in range(0,2)])
+            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"] for ii in range(0,3)])
 
         self.controls_flags2 = widgets.VBox([
-            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"] for ii in range(2,5)])
+            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"] for ii in range(3,6)])
         
         self.controls_flags3 = widgets.VBox([
-            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"] for ii in range(5,8)])
-
-        self.controls_flags4 = widgets.VBox([
-            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"] for ii in range(8,11)])
-
+            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"] for ii in range(6,10)])
+    
         # top row components
         self.output_spatial_plot.layout = make_box_layout(width=col1w, height=row1h, border=None)
         selection_radio_widget.layout = make_box_layout(width=col2w, height="185px")
@@ -89,29 +86,25 @@ class CorrectionModel(widgets.VBox):
         self.first_row = widgets.HBox([self.output_spatial_plot, selection_radio_widget, reference_surface_radio_widget])
 
         # second row components
-        self.controls_corr_full = widgets.VBox([widgets.HTML(description="𝗖𝗼𝗿𝗿𝗲𝗰𝘁𝗶𝗼𝗻𝘀:", value="",),self.controls_corr,
-                                                clear_corr_button])
+        self.controls_corr_full = widgets.VBox([widgets.HTML(description="𝗖𝗼𝗿𝗿𝗲𝗰𝘁𝗶𝗼𝗻𝘀:", value="",), self.controls_corr, clear_corr_button])
         self.controls_corr_full.layout = make_box_layout(width=col1w, height=row2h)        
         self.range_slider.layout = make_box_layout(width=col3w)
         self.output_corr_plot.layout = make_box_layout(width="600px")
         self.second_row = widgets.HBox([self.controls_corr_full, self.output_corr_plot, self.range_slider]) 
 
         # third row components
-        '''
-        self.controls_flags_full1 = widgets.VBox([widgets.HTML(description="𝗙𝗹𝗮𝗴𝘀:", value="",), self.controls_flags1])
+        
+        self.controls_flags_full0 = widgets.VBox([widgets.HTML(description="𝗙𝗹𝗮𝗴𝘀:", value="",), clear_flag_button])
+        self.controls_flags_full1 = widgets.VBox([self.controls_flags1])
         self.controls_flags_full2 = widgets.VBox([self.controls_flags2])
         self.controls_flags_full3 = widgets.VBox([self.controls_flags3])
-        self.controls_flags_full4 = widgets.VBox([self.controls_flags4])
-        self.third_row = widgets.HBox([self.controls_flags_full1, self.controls_flags_full2,
-                                       self.controls_flags_full3, self.controls_flags_full4])
-        self.third_row.layout = make_box_layout(width="1020px", height="115px")
+        self.third_row = widgets.HBox([self.controls_flags_full0, self.controls_flags_full1,
+                                       self.controls_flags_full2, self.controls_flags_full3])
+        self.third_row.layout = make_box_layout(width="1020px", height="135px")
 
-        
         # add to children
         self.children = [self.first_row, self.second_row, self.third_row]
-        '''
-        self.children = [self.first_row, self.second_row]
-        
+                
         # ---TRIGGERS---
         # changes to track selection
         selection_radio_widget.observe(self.change_track, 'value')
@@ -124,11 +117,11 @@ class CorrectionModel(widgets.VBox):
         
         # changes to corrections
         for ii in range(len(self.corrections)): 
-            self.correction_check_box_widgets[f"corr_{str(ii).zfill(2)}"].observe(self.change_correction, 'value')
+            self.correction_check_box_widgets[f"corr_{str(ii).zfill(2)}"].observe(self.change_corrections_flags, 'value')
         
-        # change to flags
+        # changes to flags
         for ii in range(len(self.flags)): 
-            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"].observe(self.change_correction, 'value')
+            self.flag_check_box_widgets[f"flag_{str(ii).zfill(2)}"].observe(self.change_corrections_flags, 'value')
         
         # clear corrections
         clear_corr_button.on_click(self.on_corr_button_clicked)
@@ -170,7 +163,7 @@ class CorrectionModel(widgets.VBox):
 
     # track selection radio button control
     def change_track(self, change):
-        self.track_number = self.children[0].children[1].value
+        self.track_name = self.children[0].children[1].value
 
         if change.new:
             # update data
@@ -183,8 +176,7 @@ class CorrectionModel(widgets.VBox):
             datamin = np.nanmin(self.vars["data_ref"])
 
             # reset corr view....
-            self.ax_corr.line1a.set_xdata(self.vars["data_ref"])
-            self.ax_corr.line1a.set_ydata(self.vars["lat"])
+            self.ax_corr.line1a.set_offsets([[i,j] for i,j in zip(self.vars["data_ref"], self.vars["lat"])])
             self.ax_corr.set_xlim([datamin - (datamax-datamin)/10, datamax + (datamax-datamin)/10])
             
             # reset spatial view
@@ -194,7 +186,6 @@ class CorrectionModel(widgets.VBox):
                                                              cmap=plt.cm.RdYlBu_r,
                                                              s=20, marker='o', edgecolors=None,
                                                              linewidth=0.0, zorder=3)
-
             # recalculate corrections
             replot_corrections(self, make_trace)
 
@@ -217,21 +208,37 @@ class CorrectionModel(widgets.VBox):
             datamin = np.nanmin(self.vars["data_ref"])
   
             # update corr view
-            self.ax_corr.line1a.set_xdata(self.vars["data_ref"])
-            self.ax_corr.line1a.set_ydata(self.vars["lat"])
+            self.ax_corr.line1a.set_offsets([[i,j] for i,j in zip(self.vars["data_ref"], self.vars["lat"])])
+            
             self.ax_corr.set_xlim([datamin - (datamax-datamin)/10, datamax + (datamax-datamin)/10])
             self.ax_corr.plot_legend.get_texts()[0].set_text(self.varname)
             self.ax_corr.set_xlabel(self.varname)
 
+            # update spatial view
+            self.ax_spatial.line2a.remove()
+            self.ax_spatial.line2a = self.ax_spatial.scatter(self.vars["lon"], self.vars["lat"],
+                                                             c=self.vars["data_ref"],
+                                                             cmap=plt.cm.RdYlBu_r,
+                                                             s=20, marker='o', edgecolors=None,
+                                                             linewidth=0.0, zorder=3)
             # recalculate corrections
             replot_corrections(self, make_trace)
+            
             self.update_view(change)
 
     # correction check box controls
-    def change_correction(self, change):
+    def change_corrections_flags(self, change):
 
         make_trace = recalculate_corrections_flags(self)
         replot_corrections(self, make_trace)
+
+        # update spatial view
+        self.ax_spatial.line2a.remove()
+        self.ax_spatial.line2a = self.ax_spatial.scatter(self.vars["lon"], self.vars["lat"],
+                                                         c=self.vars["data_ref"],
+                                                         cmap=plt.cm.RdYlBu_r,
+                                                         s=20, marker='o', edgecolors=None,
+                                                         linewidth=0.0, zorder=3)
         self.update_view(change)
 
     def on_corr_button_clicked(self, b):

@@ -10,7 +10,7 @@ def calculate_variables(self):
     # direct variables: Sentinel-3 1 Hz (could add selectables for 20 Hz (but don't really see the point)
     S3_SRAL = True
     
-    if "S3_SRAL":
+    if "S3" in self.all_tracks[self.track_name][0]:
         variables = {"alt" : "alt_01",
                      "range" : "range_ocean_01_ku",
                      "mdt" : "mean_dyn_topo_01",
@@ -30,26 +30,48 @@ def calculate_variables(self):
                      "ss_bias" : "sea_state_bias_01_ku",
                      "surf_class" : "surf_class_01",
                      "surf_type" : "surf_type_01"}
-    else:
-        # WIP: need to factor in the damn annoying change to netCDF group structure!
-        print("Sentinel-6 not yet implemented")
+
+    elif "S6" in self.all_tracks[self.track_name][0]:
+        variables = {"alt" : "altitude",
+                     "range" : "range_ocean",
+                     "mdt" : "mean_dynamic_topography",
+                     "geoid" : "geoid",
+                     "lat" : "latitude",
+                     "lon" : "longitude",
+                     "ssha" : "ssha",
+                     "iono" : "iono_cor_alt",
+                     "dry" : "model_dry_tropo_cor_measurement_altitude",
+                     "wet" : "model_wet_tropo_cor_measurement_altitude",
+                     "ocean" : "ocean_tide_sol2",
+                     "no_eq" : "ocean_tide_non_eq",
+                     "internal" : "internal_tide",
+                     "solid" : "solid_earth_tide",
+                     "pole" : "pole_tide",
+                     "hf" : "inv_bar_cor",
+                     "ss_bias" : "sea_state_bias",
+                     "surf_class" : "surface_classification_flag",
+                     "surf_type" : "rad_surface_type_flag"}
 
     self.variables = variables
    
     # read in the specified variables
     for key in variables:
         if "lon" in key or "lat" in key:
-            self.vars_raw[key] = self.all_tracks[self.track_number][variables[key]].data
+            self.vars_raw[key] = self.all_tracks[self.track_name][1][variables[key]].data
         else:
-            self.vars_raw[key] = self.all_tracks[self.track_number][variables[key]]
-
-    # apply the default flags (but retain original variables
+            try:
+                self.vars_raw[key] = self.all_tracks[self.track_name][1][variables[key]]
+            except:
+                self.vars_raw[key] = self.all_tracks[self.track_name][2][variables[key]]
+                
+    # apply the default flags (but retain original variables)
     self.vars = self.vars_raw.copy()
-    for key in variables:
-        # Apply flag generically, removing everything that is not ocean for the default
-        # state
-        if not "lon" in key and not "lat" in key and not "surf_type" in key and not "surf_class" in key:
-            self.vars[key][self.vars["surf_class"] != 0] = np.nan 
+#    for key in variables:
+#        # Apply flag generically, removing everything that is not ocean for the default
+#        # state
+#        if not "lon" in key and not "lat" in key and not "surf_type" in key and not "surf_class" in key:
+#            self.vars[key][self.vars["surf_class"] != 0] = np.nan
+            
     self.vars = calculate_derived_vars(self.vars)
     
 def calculate_derived_vars(derived_vars):
@@ -87,44 +109,33 @@ def recalculate_corrections_flags(self):
     self.vars = calculate_derived_vars(self.vars)
     select_reference_surface(self)
 
-    '''
-    class_flags_values = self.flag_values[0:7]
+    ## ------------------------------ flag logic ------------------------------ ##
+    class_flags_values = self.flag_values[0:6]
     class_flags = []
-    class_flags.append(self.children[2].children[0].children[1].children[0].value)
-    class_flags.append(self.children[2].children[0].children[1].children[1].value)
-    class_flags.append(self.children[2].children[1].children[0].children[0].value)    
+    class_flags.append(self.children[2].children[1].children[0].children[0].value)
     class_flags.append(self.children[2].children[1].children[0].children[1].value)
-    class_flags.append(self.children[2].children[1].children[0].children[2].value)
+    class_flags.append(self.children[2].children[1].children[0].children[2].value)    
     class_flags.append(self.children[2].children[2].children[0].children[0].value)
     class_flags.append(self.children[2].children[2].children[0].children[1].value)
+    class_flags.append(self.children[2].children[2].children[0].children[2].value)
 
-    type_flags_values = self.flag_values[7:]
+    type_flags_values = self.flag_values[6:]
     type_flags = []
-    type_flags.append(self.children[2].children[3].children[0].children[2].value)
     type_flags.append(self.children[2].children[3].children[0].children[0].value)
     type_flags.append(self.children[2].children[3].children[0].children[1].value)
     type_flags.append(self.children[2].children[3].children[0].children[2].value)
+    type_flags.append(self.children[2].children[3].children[0].children[3].value)
 
     # apply flags to data before recalculation
-    for key in self.variables:
-        if not "lon" in key and not "lat" in key and not "surf_type" in key and not "surf_class" in key:
-            for ii in range(len(class_flags)):
-                if class_flags[ii] == True:
-                    self.vars[key][self.vars["surf_class"] == class_flags_values[ii]] = np.nan
-
-    for ii in range(len(type_flags)):
-                if type_flags[ii] == True:
-                    print(f"True: {type_flags[ii]}")
-                    self.vars[key][self.vars["surf_type"] == type_flags_values[ii]] = np.nan                
-                else:
-                    print(f"False: {type_flags[ii]}")
-
     for ii in range(len(class_flags)):
         if class_flags[ii] == True:
             self.vars["data_ref"][self.vars["surf_class"] == class_flags_values[ii]] = np.nan
-    '''
 
-    # count the logic
+    for ii in range(len(type_flags)):
+        if type_flags[ii] == True:
+            self.vars["data_ref"][self.vars["surf_type"] == type_flags_values[ii]] = np.nan
+
+    ## ------------------------------ corrections logic ------------------------------ ##
     tick_logic = []
     for ii in range(0, len(self.children[1].children[0].children[1].children)):
         tick_logic.append(self.children[1].children[0].children[1].children[ii].value)

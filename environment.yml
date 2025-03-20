@@ -13,6 +13,7 @@ dependencies:
   - conda-forge::dask
   - conda-forge::distributed
   - conda-forge::hda
+  - conda-forge::ipympl
   - conda-forge::ipywidgets
   - conda-forge::jupyterlab
   - conda-forge::matplotlib

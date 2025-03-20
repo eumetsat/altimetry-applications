@@ -18,7 +18,8 @@ def set_corr_plot(self):
         datamax = np.nanmax(self.vars["data_ref"])
         datamin = np.nanmin(self.vars["data_ref"])
   
-        self.ax_corr.line1a, = self.ax_corr.plot(self.vars["data_ref"], self.vars["lat"], 'k')
+        self.ax_corr.line1a = self.ax_corr.scatter(self.vars["data_ref"], self.vars["lat"], c='k',
+                                                   s=5, marker="o", edgecolors=None, linewidth=0.0, zorder=3)
         self.ax_corr.set_xlabel(self.varname)
         self.ax_corr.set_ylabel('$Latitude$')
         self.ax_corr.set_xlim([datamin - (datamax - datamin)/10.0, datamax + (datamax - datamin)/10.0])
@@ -78,7 +79,9 @@ def replot_corrections(self, make_trace):
             pass
         
         # make a new trace
-        self.ax_corr.line1b, = self.ax_corr.plot(self.vars["data_corr"], self.vars["lat"], 'r')
+        self.ax_corr.line1b = self.ax_corr.scatter(self.vars["data_corr"], self.vars["lat"], c='r',
+                                                   s=5, marker="o", edgecolors=None, linewidth=0.0, zorder=1)
+        
         self.ax_corr.fillb = self.ax_corr.fill_betweenx(self.vars["lat"],
                                                         self.vars["data_ref"],
                                                         self.vars["data_corr"],

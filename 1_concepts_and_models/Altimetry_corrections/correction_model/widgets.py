@@ -44,25 +44,24 @@ def build_widgets(self, width="250px"):
                                     disabled=False,
                                     button_style='info',
                                     tooltip='Button to clear all active corrections',
-                                    icon='check' # (FontAwesome names without the `fa-` prefix)
+                                    icon='check', # (FontAwesome names without the `fa-` prefix)
                                    )
 
     # define flag widgets: check boxes
     flag_check_box_widgets = {}
     
-    flags = ["Surface class (open ocean)",
-             "Surface class (land)",
-             "Surface class (continental water)",
-             "Surface class (aquatic vegetation)",
-             "Surface class (continental ice/snow)",
-             "Surface class (floating ice)",
-             "Surface class (salted basin)",
-             "Surface type (ocean_or_semi_enclosed_sea)",
-             "Surface type (enclosed_sea_or_lake)",
-             "Surface type (continental_ice)",
-             "Surface type (land)"]
+    flags = ["Surf class land",
+             "Surf class continental water",
+             "Surf class aquatic vegetation",
+             "Surf class continental ice/snow",
+             "Surf class floating ice",
+             "Surf class salted basin",
+             "Surf type ocean or open sea",
+             "Surf type coast (S6); enclosed/lake (S3)",
+             "Surf type coast amr (S6); land ice (S3)",
+             "Surf type land"]
     
-    flag_values = [0,1,2,3,4,5,6,0,1,2,3]
+    flag_values = [1,2,3,4,5,6,0,1,2,3]
     
     count = 0
     for flag in flags:
@@ -70,14 +69,14 @@ def build_widgets(self, width="250px"):
             set_val = False
             set_disabled = True
         else:
-            set_val = True
+            set_val = False
             set_disabled = False
         flag_check_box_widgets[f"flag_{str(count).zfill(2)}"] = widgets.Checkbox(
         value=set_val,
         description=flag,
         disabled=set_disabled,
         indent=False,
-        layout=Layout(width=width))
+        layout=Layout(width="300px"))
         count = count + 1
 
     # clear all flags button
