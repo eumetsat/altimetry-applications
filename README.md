@@ -4,26 +4,29 @@
 
 [![Python](https://img.shields.io/badge/python%203.10-anaconda-green)](https://www.anaconda.com/products/distribution)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE.txt)
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/git/https%3A%2F%2Fgitlab.eumetsat.int%2Feumetlab%2Foceans%2Focean-training%2Fapplications%2Faltimetry-applications/HEAD?urlpath=%2Ftree%2FIndex.ipynb)
+[![EUMETLAB](https://img.shields.io/badge/open-EUMETLAB-E67E22.svg)](https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/applications/altimetry-applications)
+[![USER PORTAL](https://img.shields.io/badge/open-USER%20PORTAL-154360.svg)](https://user.eumetsat.int/data/themes/marine)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/git/https%3A%2F%2Fgitlab.eumetsat.int%2Feumetlab%2Foceans%2Focean-training%2Fapplications%2Faltimetry-applications/HEAD?labpath=Index.ipynb)
+[![WEkEO](https://img.shields.io/badge/launch-WEKEO-1a4696.svg)](https://jupyterhub.prod.wekeo2.eu/hub/user-redirect/lab/tree/public/wekeo4oceans/altimetry-applications/Index.ipynb)
+[![DestinE](https://img.shields.io/badge/launch-DestinE-f43fd3.svg)](https://code.insula.destine.eu/hub/)
 
 <hr>
 
 ## Overview
 This software was developed for EUMETSAT under contract EUM/CO/21/4600002620, funded by the European Union under the Copernicus component of the EU Space Programme. 
 
-The **altimetry-applications** module consists of a collection of python-based Jupyter-notebooks 
-that demonstrate some common methodologies employed in the field of altimetry. The focus is predominantly
-on altimetry products made available by EUMETSAT through the Copernicus programme (e.g. those from Sentinel-3 SRAL, Sentinel-6 POSEIDON-4 and Jason-3) 
-but also includes information on general principles of altimetry. It features examples of typical workflows and approaches relevant to multi-sensor analysis, amongst others.
+The **altimetry-applications** module consists of a collection of python-based Jupyter-notebooks that demonstrate some common methodologies employed in the field of altimetry. The focus is predominantly on altimetry products made available by EUMETSAT through the Copernicus programme (e.g. those from Sentinel-3 SRAL, Sentinel-6 POSEIDON-4 and Jason-3) but also includes information on general principles of altimetry. It features examples of typical workflows and approaches relevant to multi-sensor analysis, amongst others.
 
 Users looking for more information on using products from the Sentinel-3 Synthetic Aperture Radar Altimeter (SRAL) and Sentinel-6 POSEIDON-4 altimeter in the marine domain are encouraged to check out our [learn-sral](https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/sensors/learn-sral) and [learn-s6](https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/sensors/learn-s6) repositories.
 
 For any questions about this repository, please contact ops@eumetsat.int.
 
 ## Ownership
+
 This software and all associated intellectual property rights (IPRs) are owned by the European Union.
 
 ## License
+
 This code is licensed under an MIT license. See file LICENSE.txt for details on 
 the usage and distribution terms. No dependencies are distributed as part of this 
 package. Copyright 2025 European Union.
@@ -56,6 +59,7 @@ operating system. Anaconda Python distributions include Jupyter Notebook.
 |dask|2024.6.0|BSD-3|https://anaconda.org/conda-forge/dask|
 |distributed|2024.6.0|BSD-3|https://anaconda.org/conda-forge/distributed| 
 |hda|2.16|Apache-2.0|https://pypi.org/project/hda|
+|ipympl|0.9.6|NSD-3|https://anaconda.org/conda-forge/ipympl/|
 |ipywidgets|8.1.3|BSD-3|https://anaconda.org/conda-forge/ipywidgets|
 |jupyterlab|4.2.2|BSD-3|https://anaconda.org/conda-forge/jupyterlab|
 |matplotlib|3.8.4|PSFL|https://matplotlib.org/stable/users/project/license.html|
@@ -152,11 +156,59 @@ This should open Jupyter Notebooks in a browser window. On occasion, Jupyter may
 be able to open a window and will give you a URL to past in your browser. Please do
 so, if required.
 
-*Note: Jupyter Notebook is not able to find modules that are 'above' it in a directory 
+*Note: Jupyter Lab is not able to find anything that is 'above' it in a directory 
 tree, and you will unable to navigate to these. So make sure you run the line above 
 from the correct directory!*
 
 Now you can run the notebooks! We recommend you start with the [Index](./Index.ipynb) module.
+
+### Running on cloud platforms
+
+If you are running on a remote Jupyter Hub (e.g. WEkEO or Insula Code) you will need to perform some additional steps to 
+ensure that you have the right python environment loaded in your notebook. When running locally, as long you have activated 
+the correct environment, Jupyter will load it into your the "kernel" which runs your code by default. On cloud systems, we 
+have to add the kernel to the system and apply it manually when we run. Below are the steps you need to run on WEkEO or the 
+DestinE Insula Code platforms to configure this repository and run these notebooks;
+
+1. Open JupyterHub: You will need a WEkEO or InsulaCode account to open their respective Jupyter Hubs. You can use the buttons at the top of this README to access the systems. For WEkEO you should choose the "Earth Observation Tools" server.
+
+2. Open a terminal (you can use the + icon on the left hand side of the menu bar to do this)
+
+3. If you are running on WEkEO, access the "work" directory by typing (you can skip this if running on DestinE);
+
+`cd ~/work`
+
+4. Clone the code base to the system using
+
+`git clone --recurse-submodules --remote-submodules https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/applications/altimetry-applications.git`
+
+5. Enter the repository directory using
+
+`cd altimetry-applications`
+
+6. create the python environment using
+
+`conda env create -f environment.yml --solver=libmamba -y`
+
+7. initialise the conda environment with
+
+`conda init zsh; source ~/.zshrc`
+
+8. activate the environment with
+
+`conda activate cmts_altimetry_applications`
+
+9. add a kernel to your system with
+
+`ipython kernel install --name cmts_altimetry_applications --user`
+
+10. make some minor fixes
+
+`conda remove --force pyproj -y; pip install pyproj`
+
+11. You should now be able to select the kernel from the menu bar in the top right hand side of any notebook you run.
+
+*Note: it sometimes takes a few seconds for the kernel to register in the notebook itself*
 
 ### Collaborating, contributing and issues
 

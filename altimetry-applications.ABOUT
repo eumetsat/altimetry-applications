@@ -3,7 +3,7 @@ name: altimetry-applications
 description: Compendium of training content associated with concepts, models and methodological approaches for working with altimetry products from Earth observation.
 copyright: 2025 European Union
 license_spdx: MIT
-date: 01-06-2024
+date: 01-04-2025
 home_url: https://gitlab.eumetsat.int/eumetlab/oceans/ocean-training/applications/altimetry-applications
 
 # Package IPR documentation
@@ -37,5 +37,6 @@ about_resource: ./README.txt
 about_resource: ./altimetry-applications.ABOUT
 about_resource: ./environment.yml
 about_resource: ./img/thumbs/Index_thumb.png
+about_resource: ./img/thumbs/Altimetry_corrections_thumb.png
 
 # Notes:
