@@ -24,3 +24,5 @@ dependencies:
   # External
   - cmts::eumartools
   - eumetsat::eumdac
+  # Extension
+  - conda-forge::copernicusmarine=1.3
